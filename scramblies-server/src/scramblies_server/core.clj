@@ -4,13 +4,27 @@
    [compojure.core :refer [defroutes GET]]
    [compojure.route :as route]
    [clojure.data.json :as json]
+   [clojure.string :refer [split]]
    [ring.middleware.defaults :refer [wrap-defaults site-defaults]]))
 
+(defn scramble?
+  "takes args str1 str2 -[all lowercase] and returns true if a portion of str1 characters can be rearranged to match str2, otherwise returns false"
+  [str1 str2]
+  (let [[vec-str1 vec-str2]   (map #(split % #"") [str1 str2])
+        [freq-str1 freq-str2] (map frequencies [vec-str1 vec-str2])]
+    (cond
+      (some false? (map #(contains? freq-str1 %) (keys freq-str2))) false
+      (some true? (map (fn [[k v]] (> v (freq-str1 k))) freq-str2)) false
+      :else true)))
+
 (defn scramblies
-  [_]
-  (let [result {:status 200
-                :headers {:Content-Type "application/json"}
-                :body    "Well, This Works"}]
+  [req]
+  (let [req-body  (-> req :body slurp json/read-str)
+        str1      (req-body "str1")
+        str2      (req-body "str2")
+        result    {:status 200 
+                   :headers {:Content-Type "application/json"} 
+                   :body    (scramble? str1 str2)}]
     (json/write-str result)))
 
 (defroutes scramblies-routes
