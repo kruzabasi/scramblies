@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              gray: {
+                500: "#828282",
+              },
+            }
+          }
+        }
+      }
+    </script>
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .content-auto {
+          content-visibility: auto;
+        }
+      }
+    </style>
+    <title>scramblies-client</title>
+  </head>
+  <body>
+    <noscript>
+      scramblies-client is a JavaScript app. Please enable JavaScript to continue.
+    </noscript>
+    <div id="app"></div>
+    <script src="/js/compiled/app.js"></script>
+  </body>
+</html>
