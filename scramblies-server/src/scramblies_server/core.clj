@@ -19,12 +19,10 @@
 
 (defn scramblies
   [req]
-  (let [req-body  (-> req :body slurp json/read-str)
-        str1      (req-body "str1")
-        str2      (req-body "str2")
-        result    {:status 200 
-                   :headers {:Content-Type "application/json"} 
-                   :body    (scramble? str1 str2)}]
+  (let [{:keys [str1 str2]}   (:params req)
+        result                {:status 200
+                               :headers {:Content-Type "application/json"}
+                               :body    (scramble? str1 str2)}]
     (json/write-str result)))
 
 (defroutes scramblies-routes
