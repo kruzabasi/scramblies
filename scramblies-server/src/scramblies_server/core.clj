@@ -5,7 +5,8 @@
    [compojure.route :as route]
    [clojure.data.json :as json]
    [clojure.string :refer [split]]
-   [ring.middleware.defaults :refer [wrap-defaults site-defaults]]))
+   [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
+   [ring.middleware.cors :refer [wrap-cors]]))
 
 (defn scramble?
   "takes args str1 str2 -[all lowercase] and returns true if a portion of str1 characters can be rearranged to match str2, otherwise returns false"
@@ -23,7 +24,7 @@
         result                {:status 200
                                :headers {:Content-Type "application/json"}
                                :body    (scramble? str1 str2)}]
-    (json/write-str result)))
+       (json/write-str result)))
 
 (defroutes scramblies-routes
   (GET "/" [] scramblies)
@@ -32,4 +33,9 @@
 (defn -main [& _]
   (let [port (Integer/parseInt (or (System/getenv "PORT") "3000"))]
     (println "Starting Scramblies Server")
-    (http/start {:port port :handler (wrap-defaults #'scramblies-routes site-defaults)})))
+    (http/start {:port     port
+                 :handler  (->
+                            (wrap-defaults #'scramblies-routes site-defaults)
+                            (wrap-cors :access-control-allow-origin [#".*"]
+                                       :access-control-allow-methods [:get]
+                                       :access-control-allow-credentials true))})))
