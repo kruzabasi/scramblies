@@ -40,8 +40,8 @@
    [:div {:className "form-group mb-6"}
     (string-input "Main String" "str1")
     (string-input "Sub String" "str2")
-    (let [str1 @(subscribe [:str1-value])
-          str2 @(subscribe [:str2-value])
+    (let [str1        @(subscribe [:str1-value])
+          str2        @(subscribe [:str2-value])
           valid-form? (and (alphabets? str1) (alphabets? str2))]
       [:button {:type "submit"
                 :disabled (not valid-form?)
@@ -60,6 +60,6 @@
      [:main {:className "self-center m-4 min-h-max w-full"}
       [:div {:className "mx-auto block p-6 rounded-lg shadow-lg bg-white max-w-sm h-full"}
        (scramblies-form)
-       [:span {:className "float-right mb-4"}
+       [:span {:className "float-right mb-4 font-bold text-md"}
         (when @(subscribe [:scramblies-res])
           (str (@(subscribe [:scramblies-res]) "result")))]]]]))
