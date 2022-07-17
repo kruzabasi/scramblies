@@ -21,9 +21,9 @@
 (defn scramblies
   [req]
   (let [{:keys [str1 str2]}   (:params req)
-        result                {:status 200
-                               :headers {:Content-Type "application/json"}
-                               :body    (scramble? str1 str2)}]
+        result                {:string-1 str1
+                               :string-2 str2
+                               :result   (scramble? str1 str2)}]
        (json/write-str result)))
 
 (defroutes scramblies-routes
