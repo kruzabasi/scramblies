@@ -18,5 +18,5 @@
    :extra-paths ["test"]
    :main-opts   ["-m" "cognitect.test-runner"]}
 
-  :scrablies-server
+  :scramblies-server
   {:main-opts    ["-m" "scramblies-server.core"]}}}

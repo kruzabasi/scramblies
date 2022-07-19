@@ -10,12 +10,12 @@ cd scramblies
 
 Then start the App server:
 ```
-cd scrablies-server
-clj -M:scrablies-server
+cd scramblies-server
+clj -M:scramblies-server
 ```
 
 And after that start the web UI:
 ```
-cd scrablies-client
+cd scramblies-client
 npx shadow-cljs watch app
 ```
